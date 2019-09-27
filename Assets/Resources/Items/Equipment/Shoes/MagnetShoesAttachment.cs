@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/MagnetShoesAttachment")]
 public class MagnetShoesAttachment : EquipmentItem
 {
     public KeyCode triggerButton;

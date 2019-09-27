@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/GForceIndikator")]
 public class GForceIndikator : EquipmentItem
 { 
     GameObject imageObject;

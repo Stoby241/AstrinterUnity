@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/ToVelocityRotator")]
 public class ToVelocityRotator : EquipmentItem
 {
     public KeyCode button;

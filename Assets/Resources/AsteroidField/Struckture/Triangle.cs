@@ -15,4 +15,5 @@ public class Triangle
     public Vector2[] UV2s;
     public Color color;
     public float perlinNoiseSamplePercent;
+    public Biom biom;
 }

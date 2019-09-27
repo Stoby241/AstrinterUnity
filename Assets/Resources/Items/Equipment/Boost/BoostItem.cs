@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/BoostItem")]
 public class BoostItem : EquipmentItem
 {
     public Vector2 force;

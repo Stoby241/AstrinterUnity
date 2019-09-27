@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/PathIndikator")]
 public class PathIndikator : EquipmentItem
 {
     GameObject lineObject;

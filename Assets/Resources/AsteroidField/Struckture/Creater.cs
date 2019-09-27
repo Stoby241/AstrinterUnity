@@ -16,10 +16,15 @@ public class Creater : MonoBehaviour
         }
         random = new System.Random(seed);
 
-        for (int i = 0; i < noiseSettings.Length; i++)
+        for (int i = 0; i < visableNoiseSettings.Length; i++)
         {
-            noiseSettings[i].z = random.Next(0, noiseOffset.x);
-            noiseSettings[i].w = random.Next(0, noiseOffset.y);
+            visableNoiseSettings[i].z = random.Next(0, noiseOffset.x);
+            visableNoiseSettings[i].w = random.Next(0, noiseOffset.y);
+        }
+        for (int i = 0; i < biomNoiseSettings.Length; i++)
+        {
+            biomNoiseSettings[i].z = random.Next(0, noiseOffset.x);
+            biomNoiseSettings[i].w = random.Next(0, noiseOffset.y);
         }
 
         asteroidFieldData.chunks = new Dictionary<Vector2Int, ChunkData>();
@@ -228,7 +233,9 @@ public class Creater : MonoBehaviour
 
     public int pointsSize;
     public Vector2Int noiseOffset;
-    public Vector4[] noiseSettings;
+    public float[,] visableNoiseSettings;
+    public Biom[] bioms;
+    public float[,] biomNoiseSettings;
     private void createChunkDatas(ChunkData[] chunkDatas)
     {
         for (int index = 0; index < chunkDatas.Length; index++)
@@ -273,24 +280,24 @@ public class Creater : MonoBehaviour
             // Turning the triangles visable 
             foreach (Triangle triangle in chunkData.triangles)
             {
-                foreach (Vector4 noiseSetting in noiseSettings)
+                for (i = 0; i < visableNoiseSettings.Length; i++)
                 {
-                    float xCoord = (triangle.middlePos.x + triangle.chunkData.startPosXY.x + noiseSetting[2]) / noiseSetting[1];
-                    float yCoord = (triangle.middlePos.y + triangle.chunkData.startPosXY.y + noiseSetting[3]) / noiseSetting[1];
+                    float xCoord = (triangle.middlePos.x + triangle.chunkData.startPosXY.x + visableNoiseSettings[i,2]) / visableNoiseSettings[i,1];
+                    float yCoord = (triangle.middlePos.y + triangle.chunkData.startPosXY.y + visableNoiseSettings[i,3]) / visableNoiseSettings[i,1];
                     float noise = Mathf.PerlinNoise(xCoord, yCoord);
 
-                    if (noiseSetting[0] > noise)
+                    if (visableNoiseSettings[i,0] > noise)
                     {
                         triangle.visable = true;
 
-                        float a = 1 - (noise / noiseSetting[0]);
+                        float a = 1 - (noise / visableNoiseSettings[i,0]);
                         if (triangle.perlinNoiseSamplePercent < a)
                             triangle.perlinNoiseSamplePercent = a;
                     }
-                    else if ((1 - noiseSetting[0]) < noise)
+                    else if ((1 - visableNoiseSettings[i,0]) < noise)
                     {
                         triangle.visable = true;
-                        float a = 1 - ((1 - noise) / noiseSetting[0]);
+                        float a = 1 - ((1 - noise) / visableNoiseSettings[i,0]);
                         if (triangle.perlinNoiseSamplePercent < a)
                             triangle.perlinNoiseSamplePercent = a;
                     }
@@ -315,11 +322,43 @@ public class Creater : MonoBehaviour
                 }
             }
 
+            //Biom
+            foreach (Triangle triangle in chunkData.visableTriangle)
+            {
+                float noise = 0;
+                for (i = 0; i < biomNoiseSettings.Length; i++)
+                {
+                    float xCoord = (triangle.middlePos.x + triangle.chunkData.startPosXY.x + biomNoiseSettings[i,1]) / biomNoiseSettings[i,0];
+                    float yCoord = (triangle.middlePos.y + triangle.chunkData.startPosXY.y + biomNoiseSettings[i,2]) / biomNoiseSettings[i,0];
+                    float newnoise = Mathf.PerlinNoise(xCoord, yCoord);
+                    
+                    if(newnoise > noise)
+                    {
+                        noise = newnoise;
+                        triangle.biom = bioms[i];
+                    }
+                    i++;
+
+                }
+                
+            }
+
             // Assing Items
             foreach (Triangle triangle in chunkData.visableTriangle)
             {
-                int b = (int)(triangle.perlinNoiseSamplePercent * defaultAsteroidLayers.Length);
-                triangle.item = defaultAsteroidLayers[b];
+                i = 0;
+                foreach(BuildItem item in triangle.biom.items)
+                {
+                    if(triangle.perlinNoiseSamplePercent > triangle.biom.settings[i].y &&
+                        triangle.perlinNoiseSamplePercent < triangle.biom.settings[i].z)
+                    {
+                        float b = random.Next(0,1);
+                        if(b < triangle.biom.settings[i].x)
+                        {
+                            triangle.item = item;
+                        }
+                    }
+                }
             }
 
             // Mesh

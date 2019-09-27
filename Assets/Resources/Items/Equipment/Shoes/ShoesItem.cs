@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/ShoesItem")]
 public class ShoesItem : EquipmentItem
 {
     public KeyCode walkLeftButton;

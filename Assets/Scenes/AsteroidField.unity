@@ -273,11 +273,14 @@ MonoBehaviour:
   finishCallsPerUpadate: 1
   pointsSize: 10
   noiseOffset: {x: 1000000, y: 1000000}
-  noiseSettings:
-  - {x: 0.12, y: 20, z: 0, w: 0}
-  - {x: 0.1, y: 40, z: 0, w: 0}
-  - {x: 0.1, y: 70, z: 0, w: 0}
-  - {x: 0.09, y: 100, z: 0, w: 0}
+  visableNoiseSettings:
+  - {x: 0, y: 0, z: 0, w: 0}
+  bioms:
+  - {fileID: 11400000, guid: cac518727c0b9f640a11260382a37b18, type: 2}
+  - {fileID: 11400000, guid: f564f76ea9cdb0f4ea929664f67f765e, type: 2}
+  biomNoiseSettings:
+  - {x: 1, y: 0, z: 0, w: 0}
+  - {x: 1, y: 0, z: 0, w: 0}
   buildMaterial: {fileID: 2100000, guid: 99a6b9bb0af19634499af39dd024692a, type: 2}
 --- !u!114 &564535965
 MonoBehaviour:
@@ -396,7 +399,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 60bf7a0a7fa8e4c4bacba4c37edb644b, type: 2}
   - {fileID: 11400000, guid: 3d1b61070382cc34083e554960c02c1d, type: 2}
   - {fileID: 11400000, guid: 0a533698aae747348b95c172003bd914, type: 2}
-  - {fileID: 11400000, guid: 620d63530f07434429b48b3a8b18aed3, type: 2}
 --- !u!1 &947504721
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,7 +592,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 10
   m_Depth: -1
   m_CullingMask:
@@ -615,7 +617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445844921}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 358687894}

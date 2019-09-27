@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/MovementBuffItem")]
 public class MovementBuffItem : EquipmentItem
 {
     public Vector2 movmentBuff;
