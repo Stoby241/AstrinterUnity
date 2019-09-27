@@ -255,7 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidFieldData: {fileID: 564535965}
   threadController: {fileID: 564535967}
-  seed: -2026185253
+  seed: 0
   defaultAsteroidLayers:
   - {fileID: 11400000, guid: a8c97c856280ed24fb22ebf4d52fa30d, type: 2}
   - {fileID: 11400000, guid: 8dad54c3aa21d464f918ce12d30ac0fd, type: 2}
