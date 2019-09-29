@@ -6,5 +6,6 @@ using UnityEngine;
 public class Biom : ScriptableObject
 {
     public BuildItem[] items;
-    public Vector3[] settings;
+    public Vector4[] settings;
+    public Vector2[] noiseOffsets;
 }

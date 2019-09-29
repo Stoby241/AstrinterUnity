@@ -5,9 +5,8 @@ public class Item : ScriptableObject
 {
     public Sprite Icon;
 
-    public int stackSize;
-    public float weight;
-    public string discription;
+    public float mass = 1000;
+    public string discription = "A Item";
     
     public Player player;
     public InGameUI inGameUI;

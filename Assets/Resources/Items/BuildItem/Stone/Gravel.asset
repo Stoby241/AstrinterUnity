@@ -12,22 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a25e60e4d88012488cb6e10d1a0ce84, type: 3}
   m_Name: Gravel
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  stackSize: 100
-  weight: 0
+  Icon: {fileID: 21300000, guid: bcc434645af58b14b9c30c1923838bbf, type: 3}
+  mass: 460
   discription: 
   player: {fileID: 0}
   inGameUI: {fileID: 0}
   duribility: 50
   maxduribility: 50
-  mass: 460
   UV0s:
-  - {x: 0.125, y: 0}
-  - {x: 0.0625, y: 0.84}
+  - {x: 0.083333336, y: 0}
+  - {x: 0.041666668, y: 0.84}
   - {x: 0, y: 0}
   - {x: 0, y: 0.84}
-  - {x: 0.125, y: 0.84}
-  - {x: 0.0625, y: 0}
+  - {x: 0.083333336, y: 0.84}
+  - {x: 0.041666668, y: 0}
   onButton: 0
   buildDistance: 0
   searchChunkDistanceOffset: 0

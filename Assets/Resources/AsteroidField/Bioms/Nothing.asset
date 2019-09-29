@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab7dce356c747364ebe44b4a939ff5a3, type: 3}
-  m_Name: Normal
+  m_Name: Nothing
   m_EditorClassIdentifier: 
   items:
   - {fileID: 11400000, guid: a8c97c856280ed24fb22ebf4d52fa30d, type: 2}
@@ -18,7 +18,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3743e0d75845ea841843f660d6a24178, type: 2}
   - {fileID: 11400000, guid: 525115b2bfb2a1647aab51d543b87152, type: 2}
   settings:
-  - {x: 1, y: 0, z: 0.25}
-  - {x: 1, y: 0.25, z: 0.5}
-  - {x: 1, y: 0.5, z: 0.75}
-  - {x: 1, y: 0.75, z: 1}
+  - {x: 1, y: 0, z: 0, w: 0.25}
+  - {x: 1, y: 0, z: 0.25, w: 0.5}
+  - {x: 1, y: 0, z: 0.5, w: 0.75}
+  - {x: 1, y: 0, z: 0.75, w: 1}
+  noiseOffsets:
+  - {x: 573911, y: 89231}
+  - {x: 164910, y: 324562}
+  - {x: 144705, y: 65259}
+  - {x: 761975, y: 500952}

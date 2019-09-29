@@ -10,22 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a25e60e4d88012488cb6e10d1a0ce84, type: 3}
-  m_Name: Copper
+  m_Name: Wall
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300014, guid: bcc434645af58b14b9c30c1923838bbf, type: 3}
+  Icon: {fileID: 21300020, guid: bcc434645af58b14b9c30c1923838bbf, type: 3}
   mass: 0
   discription: 
   player: {fileID: 0}
   inGameUI: {fileID: 0}
   duribility: 0
   maxduribility: 0
-  UV0s:
-  - {x: 0.6666667, y: 0}
-  - {x: 0.625, y: 0.84}
-  - {x: 0.5833333, y: 0}
-  - {x: 0.5833333, y: 0.84}
-  - {x: 0.6666667, y: 0.84}
-  - {x: 0.625, y: 0}
+  UV0s: []
   onButton: 324
   buildDistance: 5
   searchChunkDistanceOffset: 2

@@ -10,29 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab7dce356c747364ebe44b4a939ff5a3, type: 3}
-  m_Name: Ice
+  m_Name: Ores
   m_EditorClassIdentifier: 
   items:
   - {fileID: 11400000, guid: a8c97c856280ed24fb22ebf4d52fa30d, type: 2}
   - {fileID: 11400000, guid: 8dad54c3aa21d464f918ce12d30ac0fd, type: 2}
   - {fileID: 11400000, guid: 3743e0d75845ea841843f660d6a24178, type: 2}
   - {fileID: 11400000, guid: 525115b2bfb2a1647aab51d543b87152, type: 2}
-  - {fileID: 11400000, guid: 851ec5cacd732eb4faa72ca32939c558, type: 2}
-  - {fileID: 11400000, guid: 851ec5cacd732eb4faa72ca32939c558, type: 2}
+  - {fileID: 11400000, guid: 54085a3ed77b0c34a8ce4ace9e08981a, type: 2}
   - {fileID: 11400000, guid: 08a2925fd88e9144d8affbf3f22cf7e3, type: 2}
+  - {fileID: 11400000, guid: e49d835b74f07b54e9d0ceb5cbd738e9, type: 2}
+  - {fileID: 11400000, guid: 659a7b3556437e642b3728a86ecc0a0d, type: 2}
+  - {fileID: 11400000, guid: 01070d0c19ecba4489ce4c4480d88ba6, type: 2}
   settings:
   - {x: 1, y: 0, z: 0, w: 0.25}
   - {x: 1, y: 0, z: 0.25, w: 0.5}
   - {x: 1, y: 0, z: 0.5, w: 0.75}
   - {x: 1, y: 0, z: 0.75, w: 1}
-  - {x: 0.4, y: 2, z: 0.3, w: 0.7}
-  - {x: 0.55, y: 4, z: 0, w: 0.3}
-  - {x: 0.2, y: 3, z: 0.7, w: 1}
+  - {x: 0.4, y: 3, z: 0.2, w: 0.6}
+  - {x: 0.2, y: 3, z: 0.5, w: 1}
+  - {x: 0.25, y: 6, z: 0.5, w: 1}
+  - {x: 0.2, y: 10, z: 0.5, w: 1}
+  - {x: 0.3, y: 4, z: 0.5, w: 1}
   noiseOffsets:
-  - {x: 259214, y: 996409}
-  - {x: 177950, y: 539720}
-  - {x: 830914, y: 62930}
-  - {x: 782562, y: 260215}
-  - {x: 674747, y: 745642}
-  - {x: 729566, y: 195214}
-  - {x: 785208, y: 867240}
+  - {x: 450206, y: 518583}
+  - {x: 455343, y: 829290}
+  - {x: 137572, y: 512929}
+  - {x: 987320, y: 458787}
+  - {x: 778326, y: 280498}
+  - {x: 392927, y: 505363}
+  - {x: 890072, y: 250009}
+  - {x: 531417, y: 406861}
+  - {x: 429781, y: 734360}

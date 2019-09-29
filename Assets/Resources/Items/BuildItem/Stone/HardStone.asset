@@ -12,22 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a25e60e4d88012488cb6e10d1a0ce84, type: 3}
   m_Name: HardStone
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  stackSize: 100
-  weight: 0
+  Icon: {fileID: 21300004, guid: bcc434645af58b14b9c30c1923838bbf, type: 3}
+  mass: 570
   discription: 
   player: {fileID: 0}
   inGameUI: {fileID: 0}
   duribility: 200
   maxduribility: 200
-  mass: 570
   UV0s:
-  - {x: 0.375, y: 0}
-  - {x: 0.3125, y: 0.84}
   - {x: 0.25, y: 0}
+  - {x: 0.20833333, y: 0.84}
+  - {x: 0.16666667, y: 0}
+  - {x: 0.16666667, y: 0.84}
   - {x: 0.25, y: 0.84}
-  - {x: 0.375, y: 0.84}
-  - {x: 0.3125, y: 0}
+  - {x: 0.20833333, y: 0}
   onButton: 0
   buildDistance: 0
   searchChunkDistanceOffset: 0

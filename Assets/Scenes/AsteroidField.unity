@@ -261,6 +261,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8dad54c3aa21d464f918ce12d30ac0fd, type: 2}
   - {fileID: 11400000, guid: 3743e0d75845ea841843f660d6a24178, type: 2}
   - {fileID: 11400000, guid: 525115b2bfb2a1647aab51d543b87152, type: 2}
+  - {fileID: 11400000, guid: 851ec5cacd732eb4faa72ca32939c558, type: 2}
+  - {fileID: 11400000, guid: 54085a3ed77b0c34a8ce4ace9e08981a, type: 2}
+  - {fileID: 11400000, guid: 08a2925fd88e9144d8affbf3f22cf7e3, type: 2}
+  - {fileID: 11400000, guid: e49d835b74f07b54e9d0ceb5cbd738e9, type: 2}
+  - {fileID: 11400000, guid: 659a7b3556437e642b3728a86ecc0a0d, type: 2}
+  - {fileID: 11400000, guid: 01070d0c19ecba4489ce4c4480d88ba6, type: 2}
   texture0: {fileID: 2800000, guid: bcc434645af58b14b9c30c1923838bbf, type: 3}
   texture1: {fileID: 2800000, guid: 0e3df7962f6fed44abf49db75a66613e, type: 3}
   texHeight: 16
@@ -270,17 +276,22 @@ MonoBehaviour:
   player: {fileID: 358687897}
   renderRadius: 5
   showAllChunks: 1
-  finishCallsPerUpadate: 1
+  finishCallsPerUpadate: 10
   pointsSize: 10
   noiseOffset: {x: 1000000, y: 1000000}
   visableNoiseSettings:
-  - {x: 0, y: 0, z: 0, w: 0}
+  - {x: 0.12, y: 20, z: 0, w: 0}
+  - {x: 0.1, y: 40, z: 0, w: 0}
+  - {x: 0.1, y: 70, z: 0, w: 0}
+  - {x: 0.09, y: 100, z: 0, w: 0}
   bioms:
   - {fileID: 11400000, guid: cac518727c0b9f640a11260382a37b18, type: 2}
-  - {fileID: 11400000, guid: f564f76ea9cdb0f4ea929664f67f765e, type: 2}
+  - {fileID: 11400000, guid: 0b17853a15dae4b4cbe6e4893a8339a8, type: 2}
+  - {fileID: 11400000, guid: 4535924bfc2c09e45a3bd92973fdb723, type: 2}
   biomNoiseSettings:
-  - {x: 1, y: 0, z: 0, w: 0}
-  - {x: 1, y: 0, z: 0, w: 0}
+  - {x: 50, y: 0, z: 0}
+  - {x: 50, y: 0, z: 0}
+  - {x: 200, y: 0, z: 0}
   buildMaterial: {fileID: 2100000, guid: 99a6b9bb0af19634499af39dd024692a, type: 2}
 --- !u!114 &564535965
 MonoBehaviour:

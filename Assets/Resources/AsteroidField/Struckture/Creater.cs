@@ -23,8 +23,17 @@ public class Creater : MonoBehaviour
         }
         for (int i = 0; i < biomNoiseSettings.Length; i++)
         {
-            biomNoiseSettings[i].z = random.Next(0, noiseOffset.x);
-            biomNoiseSettings[i].w = random.Next(0, noiseOffset.y);
+            biomNoiseSettings[i].y = random.Next(0, noiseOffset.x);
+            biomNoiseSettings[i].z = random.Next(0, noiseOffset.y);
+        }
+        foreach (Biom biom in bioms)
+        {
+            biom.noiseOffsets = new Vector2[biom.settings.Length];
+            for (int i = 0; i < biom.noiseOffsets.Length; i++)
+            {
+                biom.noiseOffsets[i].x = random.Next(0, noiseOffset.x);
+                biom.noiseOffsets[i].y = random.Next(0, noiseOffset.y);
+            }
         }
 
         asteroidFieldData.chunks = new Dictionary<Vector2Int, ChunkData>();
@@ -233,9 +242,9 @@ public class Creater : MonoBehaviour
 
     public int pointsSize;
     public Vector2Int noiseOffset;
-    public float[,] visableNoiseSettings;
+    public Vector4[] visableNoiseSettings;
     public Biom[] bioms;
-    public float[,] biomNoiseSettings;
+    public Vector3[] biomNoiseSettings;
     private void createChunkDatas(ChunkData[] chunkDatas)
     {
         for (int index = 0; index < chunkDatas.Length; index++)
@@ -280,24 +289,24 @@ public class Creater : MonoBehaviour
             // Turning the triangles visable 
             foreach (Triangle triangle in chunkData.triangles)
             {
-                for (i = 0; i < visableNoiseSettings.Length; i++)
+                foreach (Vector4 noiseSetting in visableNoiseSettings)
                 {
-                    float xCoord = (triangle.middlePos.x + triangle.chunkData.startPosXY.x + visableNoiseSettings[i,2]) / visableNoiseSettings[i,1];
-                    float yCoord = (triangle.middlePos.y + triangle.chunkData.startPosXY.y + visableNoiseSettings[i,3]) / visableNoiseSettings[i,1];
+                    float xCoord = (triangle.middlePos.x + triangle.chunkData.startPosXY.x + noiseSetting.z) / noiseSetting.y;
+                    float yCoord = (triangle.middlePos.y + triangle.chunkData.startPosXY.y + noiseSetting.w) / noiseSetting.y;
                     float noise = Mathf.PerlinNoise(xCoord, yCoord);
 
-                    if (visableNoiseSettings[i,0] > noise)
+                    if (noiseSetting.x > noise)
                     {
                         triangle.visable = true;
 
-                        float a = 1 - (noise / visableNoiseSettings[i,0]);
+                        float a = 1 - (noise / noiseSetting.x);
                         if (triangle.perlinNoiseSamplePercent < a)
                             triangle.perlinNoiseSamplePercent = a;
                     }
-                    else if ((1 - visableNoiseSettings[i,0]) < noise)
+                    else if ((1 - noiseSetting[0]) < noise)
                     {
                         triangle.visable = true;
-                        float a = 1 - ((1 - noise) / visableNoiseSettings[i,0]);
+                        float a = 1 - ((1 - noise) / noiseSetting.x);
                         if (triangle.perlinNoiseSamplePercent < a)
                             triangle.perlinNoiseSamplePercent = a;
                     }
@@ -326,10 +335,11 @@ public class Creater : MonoBehaviour
             foreach (Triangle triangle in chunkData.visableTriangle)
             {
                 float noise = 0;
-                for (i = 0; i < biomNoiseSettings.Length; i++)
+                i = 0;
+                foreach(Vector4 noiseSetting in biomNoiseSettings)
                 {
-                    float xCoord = (triangle.middlePos.x + triangle.chunkData.startPosXY.x + biomNoiseSettings[i,1]) / biomNoiseSettings[i,0];
-                    float yCoord = (triangle.middlePos.y + triangle.chunkData.startPosXY.y + biomNoiseSettings[i,2]) / biomNoiseSettings[i,0];
+                    float xCoord = (triangle.middlePos.x + triangle.chunkData.startPosXY.x + noiseSetting.y) / noiseSetting.x;
+                    float yCoord = (triangle.middlePos.y + triangle.chunkData.startPosXY.y + noiseSetting.z) / noiseSetting.x;
                     float newnoise = Mathf.PerlinNoise(xCoord, yCoord);
                     
                     if(newnoise > noise)
@@ -347,17 +357,28 @@ public class Creater : MonoBehaviour
             foreach (Triangle triangle in chunkData.visableTriangle)
             {
                 i = 0;
-                foreach(BuildItem item in triangle.biom.items)
+                triangle.item = triangle.biom.items[0];
+                foreach (BuildItem item in triangle.biom.items)
                 {
-                    if(triangle.perlinNoiseSamplePercent > triangle.biom.settings[i].y &&
-                        triangle.perlinNoiseSamplePercent < triangle.biom.settings[i].z)
+                    if (triangle.perlinNoiseSamplePercent > triangle.biom.settings[i].z &&
+                        triangle.perlinNoiseSamplePercent < triangle.biom.settings[i].w)
                     {
-                        float b = random.Next(0,1);
-                        if(b < triangle.biom.settings[i].x)
+                        if(triangle.biom.settings[i].x == 1)
                         {
                             triangle.item = item;
                         }
+                        else
+                        {
+                            float xCoord = (triangle.middlePos.x + triangle.chunkData.startPosXY.x + triangle.biom.noiseOffsets[i].x) / triangle.biom.settings[i].y;
+                            float yCoord = (triangle.middlePos.y + triangle.chunkData.startPosXY.y + triangle.biom.noiseOffsets[i].y) / triangle.biom.settings[i].y;
+                            float noise = Mathf.PerlinNoise(xCoord, yCoord);
+                            if(noise < triangle.biom.settings[i].x)
+                            {
+                                triangle.item = item;
+                            }
+                        }
                     }
+                    i++;
                 }
             }
 
@@ -523,8 +544,6 @@ public class Creater : MonoBehaviour
             BuildItem copyItem = triangle.item;
             triangle.item = (BuildItem)ScriptableObject.CreateInstance("BuildItem");
             triangle.item.Icon = copyItem.Icon;
-            triangle.item.stackSize = copyItem.stackSize;
-            triangle.item.weight = copyItem.weight;
             triangle.item.discription = copyItem.discription;
             triangle.item.player = copyItem.player;
             triangle.item.inGameUI = copyItem.inGameUI;
