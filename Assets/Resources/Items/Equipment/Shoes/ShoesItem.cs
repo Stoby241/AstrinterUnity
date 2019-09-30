@@ -51,11 +51,11 @@ public class ShoesItem : EquipmentItem
                 }
                 else if (30 < angle && angle < 90)
                 {
-                    angle = 58;
+                    angle = 60;
                 }
                 else if (90 < angle && angle < 150)
                 {
-                    angle = 122;
+                    angle = 120;
                 }
                 else if (150 < angle && angle < 210)
                 {
@@ -63,11 +63,11 @@ public class ShoesItem : EquipmentItem
                 }
                 else if (210 < angle && angle < 270)
                 {
-                    angle = 238;
+                    angle = 240;
                 }
                 else if (270 < angle && angle < 330)
                 {
-                    angle = 302;
+                    angle = 300;
                 }
 
                 float rotation = player.transform.eulerAngles.z;

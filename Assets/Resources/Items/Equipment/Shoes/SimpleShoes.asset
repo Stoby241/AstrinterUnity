@@ -13,15 +13,14 @@ MonoBehaviour:
   m_Name: SimpleShoes
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
-  stackSize: 1
-  weight: 5
+  mass: 1000
   discription: 
   player: {fileID: 0}
   inGameUI: {fileID: 0}
   walkLeftButton: 97
   walkRightButton: 100
   jumpButton: 32
-  walkSpeed: 0.1
-  jumpSpeed: 2
+  walkSpeed: 0.5
+  jumpSpeed: 5
   minGravityMultiplyer: 1
   negativGavityOffset: 1

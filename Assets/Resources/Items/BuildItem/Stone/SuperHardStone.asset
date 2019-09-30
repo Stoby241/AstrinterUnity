@@ -26,8 +26,3 @@ MonoBehaviour:
   - {x: 0.25, y: 0.84}
   - {x: 0.33333334, y: 0.84}
   - {x: 0.29166666, y: 0}
-  onButton: 0
-  buildDistance: 0
-  searchChunkDistanceOffset: 0
-  searchTriangleDistanceOffset: 0
-  target: {x: 0, y: 0}

@@ -9,10 +9,11 @@ public class Triangle
     public bool pointingUP;
     public Point[] points;
     public Vector2 middlePos;
+    public Triangle[] neigbors;
     public bool visable;
     public BuildItem item;
     public Vector2[] UV0s;
-    public Vector2[] UV2s;
+    public Vector2[] UV1s;
     public Color color;
     public float perlinNoiseSamplePercent;
     public Biom biom;

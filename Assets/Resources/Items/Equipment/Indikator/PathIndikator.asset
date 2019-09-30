@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: PathIndikator
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
-  stackSize: 0
-  weight: 0
+  mass: 100
   discription: 
   player: {fileID: 0}
   inGameUI: {fileID: 0}
   G: 0.000001
-  mass: 100
+  objectMass: 100
   minForceMagnitude: 0.001
   maxTraingleDistance: 30
+  minTraingleDistance: 1
   pointsAmmount: 10
   forceOffset: 1
   velocityOffset: 0.145

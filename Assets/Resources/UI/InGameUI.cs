@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class InGameUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject addGameObject(string name, bool isRaltivetoPlayer, Vector2 pos)
     {
-        
-    }
+        GameObject gameObject = new GameObject();
+        gameObject.transform.parent = transform;
+        gameObject.name = name;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (isRaltivetoPlayer)
+            gameObject.transform.localPosition = pos;
+        else
+            gameObject.transform.position = pos;
+
+        return gameObject;
     }
 }

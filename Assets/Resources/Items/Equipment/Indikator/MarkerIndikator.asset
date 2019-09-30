@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b11440621c0a55646bd550390f4be913, type: 3}
-  m_Name: RightRotationalBoost
+  m_Script: {fileID: 11500000, guid: f949f88827b64bc40b0e5279546927b0, type: 3}
+  m_Name: MarkerIndikator
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
   mass: 1000
-  discription: 
+  discription: A Item
   player: {fileID: 0}
   inGameUI: {fileID: 0}
-  force: {x: 0, y: 0}
-  torque: -0.05
-  onButton: 101
-  goingRight: 1
+  arrowSprite: {fileID: 21300000, guid: 8abc906e6ee598c4ca7dd1a359afaf17, type: 3}
+  setPointButton: 116
+  point: {x: 0, y: 0}

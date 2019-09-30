@@ -14,7 +14,7 @@ public class ChunkData
     public Vector3[] vertices;
     public int[] indices;
     public Vector2[] uv;
-    public Vector2[] uv2;
+    public Vector2[] uv1;
     public Color[] colors;
 
     public List<Vector2[]> colliderPaths;

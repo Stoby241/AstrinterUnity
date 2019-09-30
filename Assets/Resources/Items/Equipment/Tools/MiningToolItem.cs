@@ -16,15 +16,15 @@ public class MiningToolItem : Item
     float damTimer;
     public override void selectedUpdate()
     {
-        Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition); // gets Position IJ
+        Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition); // gets Position
 
-        Triangle clickedTriangle = player.creater.finishedRendertChunkObjectsIJ[0].triangles[0,0];
+        Triangle clickedTriangle = null;
         float distance = float.MaxValue;
         foreach (ChunkData chunkData in player.creater.finishedRendertChunkObjectsIJ)
         {
             foreach (Triangle triangle in chunkData.triangles)
             {
-                float newDistance = Vector2.Distance(triangle.middlePos, target);
+                float newDistance = Vector2.Distance(triangle.middlePos + chunkData.startPosXY, target);
                 if (distance > newDistance)
                 {
                     distance = newDistance;
@@ -38,8 +38,17 @@ public class MiningToolItem : Item
             damTimer -= Time.deltaTime;
         }
 
-        if (clickedTriangle.visable)
+        if (lastTriangle != null)
         {
+            lastTriangle.color = new Color(0, 0, 0, 0);
+            player.creater.updateMesh(lastTriangle.chunkData);
+        }
+
+        if (clickedTriangle != null && clickedTriangle.visable)
+        {
+            clickedTriangle.color = selectedColor;
+            player.creater.updateMesh(clickedTriangle.chunkData);
+
             if (Input.GetKey(onButton) && damTimer <= 0)
             {
                 damTimer = miningSpeed;
@@ -48,17 +57,11 @@ public class MiningToolItem : Item
                 if (minedItem != null)
                 {
                     player.inventory.addItem(minedItem);
-                    player.inventory.addHotBarItem(1, minedItem);
                 }
             }
-            clickedTriangle.color = selectedColor;
             player.creater.updateMesh(clickedTriangle.chunkData);
+            player.creater.updateCollider(clickedTriangle.chunkData);
 
-            if (lastTriangle != null)
-            {
-                lastTriangle.color = new Color(0, 0, 0, 0);
-                player.creater.updateMesh(lastTriangle.chunkData);
-            }
             lastTriangle = clickedTriangle;
         }
 

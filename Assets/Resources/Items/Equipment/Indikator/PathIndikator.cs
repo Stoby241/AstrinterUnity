@@ -7,9 +7,10 @@ public class PathIndikator : EquipmentItem
     LineRenderer lineRenderer;
 
     public float G;
-    public float mass;
+    public float objectMass;
     public float minForceMagnitude;
     public float maxTraingleDistance;
+    public float minTraingleDistance;
 
     public int pointsAmmount;
     public float forceOffset;
@@ -35,9 +36,11 @@ public class PathIndikator : EquipmentItem
             Vector2 velocity = player.rigidbody.velocity * velocityOffset;
             Vector2 forceVector;
 
+            bool stop = false;
             int i = 1;
             while (i < pointsAmmount + 1)
             {
+
                 forceVector = Vector2.zero;
                 foreach (ChunkData chunkData in player.creater.finishedRendertChunkObjectsIJ)
                 {
@@ -48,13 +51,28 @@ public class PathIndikator : EquipmentItem
 
                         if (distance < maxTraingleDistance)
                         {
-                            float force = (G * mass * triangle.item.mass) / (distance * distance);
+                            float force = (G * objectMass * triangle.item.mass) / (distance * distance);
                             forceVector += relativPosition.normalized * force;
+
+                            if (distance < minTraingleDistance)
+                            {
+                                stop = true;
+                            }
                         }
                     }
                 }
                 velocity += forceVector * forceOffset;
-                points[i] = points[i - 1] + (Vector3)velocity;
+
+                if (!stop)
+                {
+                    points[i] = points[i - 1] + (Vector3)velocity;
+                }
+                else
+                {
+                    points[i] = points[i - 1];
+                }
+                
+
                 i++;
             }
 
@@ -70,10 +88,7 @@ public class PathIndikator : EquipmentItem
 
     public override void onEquiped()
     {
-        lineObject = new GameObject();
-        lineObject.transform.parent = inGameUI.transform;
-        lineObject.transform.position = new Vector3(0, 0, 10);
-        lineObject.name = name + " line";
+        lineObject = player.inGameUI.addGameObject(name, true, Vector2.zero);
         lineRenderer = lineObject.AddComponent<LineRenderer>();
         lineRenderer.positionCount = pointsAmmount + 1;
         lineRenderer.startColor = startColor;
@@ -83,7 +98,7 @@ public class PathIndikator : EquipmentItem
         lineRenderer.material = material;
 
         G = player.physiksObject.G;
-        mass = player.physiksObject.mass;
+        objectMass = player.physiksObject.mass;
         minForceMagnitude = player.physiksObject.minForceMagnitude;
         maxTraingleDistance = player.physiksObject.maxTraingleDistance;
 

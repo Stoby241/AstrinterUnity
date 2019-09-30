@@ -29,11 +29,8 @@ public class GForceIndikator : EquipmentItem
 
     public override void onEquiped()
     {
-        imageObject = new GameObject();
-        imageObject.transform.parent = inGameUI.transform;
-        imageObject.transform.localPosition = new Vector3(0, 2, 0);
+        imageObject = player.inGameUI.addGameObject(name + " Image", true, new Vector3(0, 2, 0));
         imageObject.transform.localScale = new Vector3(3, 3, 0);
-        imageObject.name = name + " Image";
         spriteRenderer = imageObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = Resources.Load("Images/UI/RedArrow", typeof(Sprite)) as Sprite;
 

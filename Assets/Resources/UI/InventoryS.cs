@@ -5,19 +5,18 @@ using UnityEngine;
 public class InventoryS : MonoBehaviour
 {
     public Player player;
-    public InGameUI inGameUI;
+    public UI UI;
 
     [SerializeField] List<Item> items;
     public void addItem(Item item)
     {
         item.player = player;
-        item.inGameUI = inGameUI;
+        item.UI = UI;
         items.Add(item);
     }
     public void removeItem(Item item)
     {
         item.player = null;
-        item.inGameUI = null;
         items.Remove(item);
     }
 

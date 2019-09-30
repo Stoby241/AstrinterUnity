@@ -9,5 +9,4 @@ public class Point
     public Vector2Int posIJ;
     public Vector2 posXY;
     public Triangle[] triangles;
-    public bool hasVisableTriangle;
 }

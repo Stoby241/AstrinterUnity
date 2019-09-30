@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300012, guid: bcc434645af58b14b9c30c1923838bbf, type: 3}
-  mass: 0
+  mass: 660
   discription: 
   player: {fileID: 0}
   inGameUI: {fileID: 0}
-  duribility: 0
-  maxduribility: 0
+  duribility: 500
+  maxduribility: 500
   UV0s:
   - {x: 0.5833333, y: 0}
   - {x: 0.5416667, y: 0.84}
@@ -26,8 +26,3 @@ MonoBehaviour:
   - {x: 0.5, y: 0.84}
   - {x: 0.5833333, y: 0.84}
   - {x: 0.5416667, y: 0}
-  onButton: 324
-  buildDistance: 5
-  searchChunkDistanceOffset: 2
-  searchTriangleDistanceOffset: 2
-  target: {x: 0, y: 0}

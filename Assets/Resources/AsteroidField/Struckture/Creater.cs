@@ -50,7 +50,7 @@ public class Creater : MonoBehaviour
     public int texHeight;
     public int texWidth;
     public Vector2[] UV0s;
-    public Vector2[] UV2s;
+    public Vector2[] UV1s;
     private void createUVs()
     {
         int width = texture0.width;
@@ -91,17 +91,17 @@ public class Creater : MonoBehaviour
         heigth = texture1.height;
         ammount = width / texWidth;
 
-        UV2s = new Vector2[ammount * 6];
+        UV1s = new Vector2[ammount * 6];
         i = 0;
-        while (i * 6 < UV2s.Length)
+        while (i * 6 < UV1s.Length)
         {
-            UV2s[i * 6 + 2] = new Vector2((float)i * (float)texWidth / (float)width, 0);
-            UV2s[i * 6 + 1] = new Vector2(((float)i + 1f) * (float)texWidth / (float)width, 0);
-            UV2s[i * 6 + 0] = new Vector2(((float)i + 0.5f) * (float)texWidth / (float)width, 0.84f);
+            UV1s[i * 6 + 2] = new Vector2((float)i * (float)texWidth / (float)width, 0);
+            UV1s[i * 6 + 1] = new Vector2(((float)i + 1f) * (float)texWidth / (float)width, 0);
+            UV1s[i * 6 + 0] = new Vector2(((float)i + 0.5f) * (float)texWidth / (float)width, 0.84f);
 
-            UV2s[i * 6 + 3] = new Vector2((float)i * (float)texWidth / (float)width, 0.84f);
-            UV2s[i * 6 + 4] = new Vector2(((float)i + 1f) * (float)texWidth / (float)width, 0.84f);
-            UV2s[i * 6 + 5] = new Vector2(((float)i + 0.5f) * (float)texWidth / (float)width, 0);
+            UV1s[i * 6 + 3] = new Vector2((float)i * (float)texWidth / (float)width, 0.84f);
+            UV1s[i * 6 + 4] = new Vector2(((float)i + 1f) * (float)texWidth / (float)width, 0.84f);
+            UV1s[i * 6 + 5] = new Vector2(((float)i + 0.5f) * (float)texWidth / (float)width, 0);
 
             i++;
         }
@@ -286,6 +286,23 @@ public class Creater : MonoBehaviour
                 }
             }
 
+            foreach(Triangle triangle in chunkData.triangles)
+            {
+                triangle.neigbors = new Triangle[3];
+                if (triangle.pointingUP)
+                {
+                    triangle.neigbors[0] = triangle.points[1].triangles[2];
+                    triangle.neigbors[1] = triangle.points[2].triangles[4];
+                    triangle.neigbors[2] = triangle.points[0].triangles[0];
+                }
+                else
+                {
+                    triangle.neigbors[0] = triangle.points[1].triangles[1];
+                    triangle.neigbors[1] = triangle.points[2].triangles[3];
+                    triangle.neigbors[2] = triangle.points[0].triangles[5];
+                }
+            }
+
             // Turning the triangles visable 
             foreach (Triangle triangle in chunkData.triangles)
             {
@@ -387,7 +404,7 @@ public class Creater : MonoBehaviour
             List<int> indices = new List<int>();
             int indecesCounter = 0;
             List<Vector2> uv = new List<Vector2>();
-            List<Vector2> uv2 = new List<Vector2>();
+            List<Vector2> uv1 = new List<Vector2>();
             List<Color> Colors = new List<Color>();
             foreach (Triangle triangle in chunkData.visableTriangle) // looping throw every visable trinagle.
             {
@@ -409,25 +426,23 @@ public class Creater : MonoBehaviour
                 }
                 if (triangle.item != null)
                 {
-                    triangle.UV2s = new Vector2[3];
-
                     float a = triangle.item.duribility / triangle.item.maxduribility * 100;
                     a = 100 - a;
-                    float b = triangle.UV2s.Length / 6;
+                    float b = (float)UV1s.Length / 6;
                     float c = a * b / 100;
                     int uvNr = (int)c;
 
                     if (triangle.pointingUP)
                     {
-                        triangle.UV2s[0] = UV2s[uvNr * 6];
-                        triangle.UV2s[1] = UV2s[uvNr * 6 + 1];
-                        triangle.UV2s[2] = UV2s[uvNr * 6 + 2];
+                        triangle.UV1s[0] = UV1s[uvNr * 6];
+                        triangle.UV1s[1] = UV1s[uvNr * 6 + 1];
+                        triangle.UV1s[2] = UV1s[uvNr * 6 + 2];
                     }
                     else
                     {
-                        triangle.UV2s[2] = UV2s[uvNr * 6 + 3];
-                        triangle.UV2s[1] = UV2s[uvNr * 6 + 4];
-                        triangle.UV2s[0] = UV2s[uvNr * 6 + 5];
+                        triangle.UV1s[2] = UV1s[uvNr * 6 + 3];
+                        triangle.UV1s[1] = UV1s[uvNr * 6 + 4];
+                        triangle.UV1s[0] = UV1s[uvNr * 6 + 5];
                     }
                 }
 
@@ -444,9 +459,9 @@ public class Creater : MonoBehaviour
                 uv.Add(triangle.UV0s[1]);
                 uv.Add(triangle.UV0s[2]);
 
-                uv2.Add(triangle.UV2s[0]);
-                uv2.Add(triangle.UV2s[1]);
-                uv2.Add(triangle.UV2s[2]);
+                uv1.Add(triangle.UV1s[0]);
+                uv1.Add(triangle.UV1s[1]);
+                uv1.Add(triangle.UV1s[2]);
 
                 Colors.Add(triangle.color);
                 Colors.Add(triangle.color);
@@ -455,22 +470,79 @@ public class Creater : MonoBehaviour
             chunkData.vertices = vertices.ToArray();
             chunkData.indices = indices.ToArray();
             chunkData.uv = uv.ToArray();
-            chunkData.uv2 = uv2.ToArray();
+            chunkData.uv1 = uv1.ToArray();
             chunkData.colors = Colors.ToArray();
 
             // Collider
-            chunkData.colliderPaths = new List<Vector2[]>();
-            i = 0;
+            List<Point[]> edges = new List<Point[]>();
             foreach (Triangle triangle in chunkData.visableTriangle)
             {
-                Vector2[] pos = new Vector2[3];
-                pos[0] = triangle.points[0].posXY;
-                pos[1] = triangle.points[1].posXY;
-                pos[2] = triangle.points[2].posXY;
-
-                chunkData.colliderPaths.Add(pos);
-                i++;
+                if (triangle.neigbors[0] == null || !triangle.neigbors[0].visable)
+                {
+                    edges.Add(new Point[] { triangle.points[1], triangle.points[2] });
+                }
+                if (triangle.neigbors[1] == null || !triangle.neigbors[1].visable)
+                {
+                    edges.Add(new Point[] { triangle.points[2], triangle.points[0] });
+                }
+                if (triangle.neigbors[2] == null || !triangle.neigbors[2].visable)
+                {
+                    edges.Add(new Point[] { triangle.points[0], triangle.points[1] });
+                }
             }
+            List<Vector2[]> paths = new List<Vector2[]>();
+            while (edges.Count > 0)
+            {
+                List<Point> pointPath = new List<Point>();
+                pointPath.Add(edges[0][1]);
+                edges.RemoveAt(0);
+
+                bool run = true;
+                while (run)
+                {
+                    run = false;
+                    foreach (Point[] testEdge in edges)
+                    {
+                        if (pointPath[pointPath.Count - 1] == testEdge[0])
+                        {
+                            pointPath.Add(testEdge[1]);
+                            edges.Remove(testEdge);
+                            run = true;
+                            break;
+                        }
+                        else if (pointPath[pointPath.Count - 1] == testEdge[1])
+                        {
+                            pointPath.Add(testEdge[1]);
+                            edges.Remove(testEdge);
+                            run = true;
+                            break;
+                        }
+                    }
+                }
+
+                List<Point> needtoDelete = new List<Point>();
+                for (i = pointPath.Count - 2; i > 0; i--)
+                {
+                    Vector2 differnz = pointPath[i - 1].posIJ - pointPath[i].posIJ;
+                    if (pointPath[i].posIJ - differnz == pointPath[i + 1].posIJ)
+                    {
+                        needtoDelete.Add(pointPath[i]);
+                    }
+                }
+                foreach(Point point in needtoDelete)
+                {
+                    pointPath.Remove(point);
+                }
+
+                Vector2[] path = new Vector2[pointPath.Count];
+                for (i = 0; i < pointPath.Count; i++)
+                {
+                    path[i] = pointPath[i].posXY;
+                }
+                paths.Add(path);
+            }
+            chunkData.colliderPaths = paths;
+            
             chunkData.state++;
         }
         creationRunnig0 = false;
@@ -520,7 +592,7 @@ public class Creater : MonoBehaviour
 
         triangle.UV0s = new Vector2[3];
 
-        triangle.UV2s = new Vector2[3];
+        triangle.UV1s = new Vector2[3];
 
         triangle.color = new Color();
 
@@ -543,10 +615,10 @@ public class Creater : MonoBehaviour
         {
             BuildItem copyItem = triangle.item;
             triangle.item = (BuildItem)ScriptableObject.CreateInstance("BuildItem");
+            triangle.item.name = copyItem.name;
             triangle.item.Icon = copyItem.Icon;
             triangle.item.discription = copyItem.discription;
             triangle.item.player = copyItem.player;
-            triangle.item.inGameUI = copyItem.inGameUI;
             triangle.item.duribility = copyItem.duribility;
             triangle.item.maxduribility = copyItem.maxduribility;
             triangle.item.UV0s = copyItem.UV0s;
@@ -557,7 +629,7 @@ public class Creater : MonoBehaviour
         chunkData.mesh.vertices = chunkData.vertices;
         chunkData.mesh.triangles = chunkData.indices;
         chunkData.mesh.uv = chunkData.uv;
-        chunkData.mesh.uv2 = chunkData.uv2;
+        chunkData.mesh.uv2 = chunkData.uv1;
         chunkData.mesh.colors = chunkData.colors;
 
         chunkData.meshFilter = chunkObject.AddComponent<MeshFilter>();
@@ -569,7 +641,7 @@ public class Creater : MonoBehaviour
         chunkData.polygonCollider2D = chunkObject.AddComponent<PolygonCollider2D>();
         chunkData.polygonCollider2D.pathCount = chunkData.colliderPaths.Count;
         int i = 0;
-        foreach (Vector2[] path in chunkData.colliderPaths)
+        foreach(Vector2[] path in chunkData.colliderPaths)
         {
             chunkData.polygonCollider2D.SetPath(i, path);
             i++;
@@ -578,6 +650,21 @@ public class Creater : MonoBehaviour
         chunkData.state++;
     }
 
+    public BuildItem removeDuribilityfromTriangle(Triangle triangle, float digDemange)
+    {
+        triangle.item.duribility -= digDemange;
+        if(triangle.item.duribility <= 0)
+        {
+            triangle.visable = false;
+            triangle.chunkData.visableTriangle.Remove(triangle);
+            triangle.item.duribility = triangle.item.maxduribility;
+            return triangle.item;
+        }
+        else
+        {
+            return null;
+        }
+    }
     public void updateMesh(ChunkData chunkData)
     {
         List<Vector3> vertices = new List<Vector3>();
@@ -606,25 +693,23 @@ public class Creater : MonoBehaviour
             }
             if (triangle.item != null)
             {
-                triangle.UV2s = new Vector2[3];
-
                 float a = triangle.item.duribility / triangle.item.maxduribility * 100;
                 a = 100 - a;
-                float b = triangle.UV2s.Length / 6;
+                float b = UV1s.Length / 6;
                 float c = a * b / 100;
                 int uvNr = (int)c;
 
                 if (triangle.pointingUP)
                 {
-                    triangle.UV2s[0] = UV2s[uvNr * 6];
-                    triangle.UV2s[1] = UV2s[uvNr * 6 + 1];
-                    triangle.UV2s[2] = UV2s[uvNr * 6 + 2];
+                    triangle.UV1s[0] = UV1s[uvNr * 6];
+                    triangle.UV1s[1] = UV1s[uvNr * 6 + 1];
+                    triangle.UV1s[2] = UV1s[uvNr * 6 + 2];
                 }
                 else
                 {
-                    triangle.UV2s[2] = UV2s[uvNr * 6 + 3];
-                    triangle.UV2s[1] = UV2s[uvNr * 6 + 4];
-                    triangle.UV2s[0] = UV2s[uvNr * 6 + 5];
+                    triangle.UV1s[2] = UV1s[uvNr * 6 + 3];
+                    triangle.UV1s[1] = UV1s[uvNr * 6 + 4];
+                    triangle.UV1s[0] = UV1s[uvNr * 6 + 5];
                 }
             }
 
@@ -641,31 +726,102 @@ public class Creater : MonoBehaviour
             uv.Add(triangle.UV0s[1]);
             uv.Add(triangle.UV0s[2]);
 
-            uv2.Add(triangle.UV2s[0]);
-            uv2.Add(triangle.UV2s[1]);
-            uv2.Add(triangle.UV2s[2]);
+            uv2.Add(triangle.UV1s[0]);
+            uv2.Add(triangle.UV1s[1]);
+            uv2.Add(triangle.UV1s[2]);
 
             Colors.Add(triangle.color);
             Colors.Add(triangle.color);
             Colors.Add(triangle.color);
         }
-        chunkData.mesh.vertices = vertices.ToArray();
-        chunkData.mesh.triangles = indices.ToArray();
-        chunkData.mesh.uv = uv.ToArray();
-        chunkData.mesh.uv2 = uv2.ToArray();
-        chunkData.mesh.colors = Colors.ToArray();
+
+        Mesh mesh = new Mesh();
+        mesh.vertices = vertices.ToArray();
+        mesh.triangles = indices.ToArray();
+        mesh.uv = uv.ToArray();
+        mesh.uv2 = uv2.ToArray();
+        mesh.colors = Colors.ToArray();
+
+        chunkData.mesh = mesh;
+        chunkData.meshFilter.mesh = mesh;
     }
-    public BuildItem removeDuribilityfromTriangle(Triangle clickedTriangle, float digDemange)
+    public void updateCollider(ChunkData chunkData)
     {
-        clickedTriangle.item.duribility -= digDemange;
-        if(clickedTriangle.item.duribility <= 0)
+        int i = 0;
+        List<Point[]> edges = new List<Point[]>();
+        foreach (Triangle triangle in chunkData.visableTriangle)
         {
-            clickedTriangle.item.duribility = clickedTriangle.item.maxduribility;
-            return clickedTriangle.item;
+            if (triangle.neigbors[0] == null || !triangle.neigbors[0].visable)
+            {
+                edges.Add(new Point[] { triangle.points[1], triangle.points[2] });
+            }
+            if (triangle.neigbors[1] == null || !triangle.neigbors[1].visable)
+            {
+                edges.Add(new Point[] { triangle.points[2], triangle.points[0] });
+            }
+            if (triangle.neigbors[2] == null || !triangle.neigbors[2].visable)
+            {
+                edges.Add(new Point[] { triangle.points[0], triangle.points[1] });
+            }
         }
-        else
+        List<Vector2[]> paths = new List<Vector2[]>();
+        while (edges.Count > 0)
         {
-            return null;
+            List<Point> pointPath = new List<Point>();
+            pointPath.Add(edges[0][0]);
+            pointPath.Add(edges[0][1]);
+            edges.RemoveAt(0);
+
+            bool run = true;
+            while (run)
+            {
+                run = false;
+                foreach (Point[] testEdge in edges)
+                {
+                    if (pointPath[pointPath.Count - 1] == testEdge[0])
+                    {
+                        pointPath.Add(testEdge[1]);
+                        edges.Remove(testEdge);
+                        run = true;
+                        break;
+                    }
+                    else if (pointPath[pointPath.Count - 1] == testEdge[1])
+                    {
+                        pointPath.Add(testEdge[1]);
+                        edges.Remove(testEdge);
+                        run = true;
+                        break;
+                    }
+                }
+            }
+            List<Point> needtoDelete = new List<Point>();
+            for (i = pointPath.Count - 2; i > 0; i--)
+            {
+                Vector2 differnz = pointPath[i - 1].posIJ - pointPath[i].posIJ;
+                if (pointPath[i].posIJ - differnz == pointPath[i + 1].posIJ)
+                {
+                    needtoDelete.Add(pointPath[i]);
+                }
+            }
+            foreach (Point point in needtoDelete)
+            {
+                pointPath.Remove(point);
+            }
+
+            Vector2[] path = new Vector2[pointPath.Count];
+            for (i = 0; i < pointPath.Count; i++)
+            {
+                path[i] = pointPath[i].posXY;
+            }
+            paths.Add(path);
+        }
+        chunkData.polygonCollider2D.pathCount = paths.Count;
+        i = 0;
+        foreach (Vector2[] path in paths)
+        {
+            chunkData.polygonCollider2D.SetPath(i, path);
+            i++;
         }
     }
+
 }

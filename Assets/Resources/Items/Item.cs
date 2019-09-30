@@ -9,7 +9,7 @@ public class Item : ScriptableObject
     public string discription = "A Item";
     
     public Player player;
-    public InGameUI inGameUI;
+    public UI UI;
 
     public virtual void equipedUpdate() { }
     public virtual void selectedUpdate() { }

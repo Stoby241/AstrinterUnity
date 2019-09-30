@@ -11,8 +11,18 @@ public class Player : MonoBehaviour
     public Rigidbody2D rigidbody;
     public Animator animator;
     public BoxCollider2D boxCollider;
+
     public PhysiksObject physiksObject;
     public InventoryS inventory;
+    public InGameUI inGameUI;
+    public UI uI;
+
+    public GameObject healthObject;
+    public int health;
+    private void Start()
+    {
+        healthObject = uI.addText("Health", "Health : " + health, 30, Vector2.one, AnchorPresets.StretchAll, new Vector2Int(60, -60));
+    }
 
     public Vector2 posIJ;
 
@@ -66,7 +76,6 @@ public class Player : MonoBehaviour
             facingRight = false;
         }
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         grounded = true;
